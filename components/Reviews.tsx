@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { REVIEWS } from '../constants';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -37,29 +36,26 @@ export const Reviews: React.FC = () => {
     return (
       <div
         key={review.id}
-        className={`absolute transition-all duration-700 ease-out ${position === 'left'
-          ? 'opacity-40 blur-sm scale-90 -translate-x-full'
-          : position === 'right'
-            ? 'opacity-40 blur-sm scale-90 translate-x-full'
-            : 'opacity-100 scale-100 z-10 translate-x-0'
-          }`}
-        style={{
-          left: position === 'left' ? '25%' : position === 'right' ? '41%' : '33%',
-          width: '34%'
-        }}
+        className={`absolute transition-all duration-700 ease-out 
+          ${position === 'left'
+            ? 'opacity-0 md:opacity-40 blur-sm scale-90 -translate-x-[120%] md:-translate-x-full left-0 md:left-[25%]'
+            : position === 'right'
+              ? 'opacity-0 md:opacity-40 blur-sm scale-90 translate-x-[120%] md:translate-x-full left-0 md:left-[41%]'
+              : 'opacity-100 scale-100 z-10 translate-x-0 left-[7.5%] md:left-[33%]'
+          } w-[85%] md:w-[34%]`}
       >
-        <div className="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100 text-left relative overflow-hidden group hover:shadow-xl transition-shadow mx-4">
-          <div className="absolute top-8 right-10 text-slate-100 text-8xl leading-none font-serif select-none group-hover:text-blue-50 transition-colors">"</div>
-          <div className="flex text-yellow-400 mb-6 text-xl">
+        <div className="bg-white p-6 md:p-10 rounded-[2.5rem] shadow-sm border border-slate-100 text-left relative overflow-hidden group hover:shadow-xl transition-shadow mx-2 md:mx-4">
+          <div className="absolute top-8 right-10 text-slate-100 text-6xl md:text-8xl leading-none font-serif select-none group-hover:text-blue-50 transition-colors">"</div>
+          <div className="flex text-yellow-400 mb-4 md:mb-6 text-lg md:text-xl">
             {Array.from({ length: review.rating }).map((_, i) => <span key={i}>★</span>)}
           </div>
-          <p className="text-slate-600 mb-8 relative z-10 text-lg leading-relaxed italic">{review.text}</p>
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center font-bold text-white text-xl uppercase shadow-lg shadow-blue-200">
+          <p className="text-slate-600 mb-6 md:mb-8 relative z-10 text-base md:text-lg leading-relaxed italic">{review.text}</p>
+          <div className="flex items-center gap-3 md:gap-4">
+            <div className="w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-blue-600 flex items-center justify-center font-bold text-white text-lg md:text-xl uppercase shadow-lg shadow-blue-200">
               {review.author.charAt(0)}
             </div>
             <div>
-              <p className="font-bold text-slate-900 text-lg">{review.author}</p>
+              <p className="font-bold text-slate-900 text-base md:text-lg">{review.author}</p>
             </div>
           </div>
         </div>
