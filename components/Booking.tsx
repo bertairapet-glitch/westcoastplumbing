@@ -1,27 +1,41 @@
 import React, { useState } from 'react';
-import { EmailService } from '../services/EmailService.ts';
 
 export const Booking: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleBooking = async (e: React.FormEvent) => {
-    console.log('🚀 handleBooking called');
     e.preventDefault();
     setIsLoading(true);
 
     const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
 
-    console.log('📋 Form submitted, sending email...');
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: json,
+      });
 
-    const success = await EmailService.sendBookingEmail(form);
+      const result = await response.json();
 
-    if (success) {
-      console.log('✅ Email sent successfully!');
-      setSubmitted(true);
-      form.reset();
-    } else {
-      console.error('❌ Email failed to send.');
+      if (result.success) {
+        setSubmitted(true);
+        form.reset();
+      } else {
+        console.error('❌ Web3Forms error:', result);
+        alert(
+          'There was an error sending your request. Please try again or call us directly at (714) 267-9974.'
+        );
+      }
+    } catch (error) {
+      console.error('❌ Network error:', error);
       alert(
         'There was an error sending your request. Please try again or call us directly at (714) 267-9974.'
       );
@@ -64,6 +78,9 @@ export const Booking: React.FC = () => {
               </div>
             ) : (
               <form id="request-form" onSubmit={handleBooking} className="bg-white p-10 sm:p-12 rounded-[2.5rem] shadow-2xl">
+                <input type="hidden" name="access_key" value="3f732bd6-dd8a-4a53-b930-3915fa4aa9b6" />
+                <input type="hidden" name="subject" value="New Plumbing Booking Request" />
+                <input type="hidden" name="from_name" value="West Coast Plumbing Website" />
                 <div className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
@@ -113,10 +130,11 @@ export const Booking: React.FC = () => {
                       Brief Description
                     </label>
                     <textarea
-                      name="description"
+                      name="message"
                       rows={3}
                       placeholder="Tell us a little about the issue..."
                       className="w-full bg-slate-50 border border-slate-200 rounded-xl px-5 py-4 focus:outline-none focus:ring-4 focus:ring-blue-500/20 transition-all text-lg resize-none"
+                      required
                     />
                   </div>
 
