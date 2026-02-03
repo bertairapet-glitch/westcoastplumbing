@@ -141,33 +141,43 @@ Partner with our industrial plumbing experts for robust, dependable systems that
     const service = getServiceContent(serviceId);
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 relative overflow-hidden">
-            <div className="absolute top-0 left-1/3 w-96 h-96 bg-gradient-to-br from-blue-200/30 to-purple-200/30 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-0 right-1/3 w-80 h-80 bg-gradient-to-tl from-indigo-200/30 to-blue-200/30 rounded-full blur-3xl"></div>
+        <div className="min-h-screen bg-slate-950 selection:bg-blue-500/30 selection:text-white relative overflow-hidden">
+            {/* Background Glows */}
+            <div className="absolute top-0 left-1/3 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-1/3 w-80 h-80 bg-indigo-600/5 rounded-full blur-[100px] pointer-events-none"></div>
+
             <Navbar />
-            <main className="pt-20 pb-16 relative z-10">
-                <div className="max-w-6xl mx-auto px-4 sm:px-10 lg:px-20">
-                    <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100/50 backdrop-blur-sm">
-                        <div className="md:flex">
-                            <div className="md:w-1/2 relative">
+            <main className="pt-32 pb-24 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 sm:px-12 lg:px-20">
+                    <div className="bg-slate-900/40 backdrop-blur-3xl rounded-[3rem] shadow-2xl overflow-hidden border border-white/5">
+                        <div className="md:flex min-h-[600px]">
+                            <div className="md:w-1/2 relative group">
                                 <img
                                     src={service.image}
                                     alt={service.title}
-                                    className="w-full h-64 md:h-full object-cover"
+                                    className="w-full h-80 md:h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-blue-600/10"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-slate-900 to-transparent opacity-60"></div>
                             </div>
-                            <div className="md:w-1/2 p-8 md:p-12 bg-gradient-to-br from-white to-slate-50">
-                                <h1 className="text-4xl font-extrabold text-slate-900 mb-6 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{service.title}</h1>
-                                <div className="prose prose-lg text-slate-600 leading-relaxed whitespace-pre-line">
+                            <div className="md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+                                <h1 className="text-4xl lg:text-6xl font-black text-white mb-8 italic tracking-tighter">
+                                    {service.title.toUpperCase()}
+                                </h1>
+                                <div className="prose prose-invert prose-lg text-slate-400 leading-relaxed whitespace-pre-line font-medium mb-12">
                                     {service.content}
                                 </div>
-                                <div className="mt-8">
+                                <div className="flex flex-col sm:flex-row gap-6">
                                     <a
                                         href="tel:7142679974"
-                                        className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg shadow-blue-200 hover:shadow-xl hover:shadow-purple-200 transform hover:scale-105"
+                                        className="inline-flex items-center justify-center px-10 py-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-black rounded-2xl shadow-xl hover:shadow-blue-500/20 transition-all transform hover:scale-105"
                                     >
-                                        📞 Call (714) 267-9974
+                                        📞 CALL NOW
+                                    </a>
+                                    <a
+                                        href="/#"
+                                        className="inline-flex items-center justify-center px-10 py-5 bg-white/5 border border-white/10 text-slate-300 font-black rounded-2xl hover:bg-white/10 transition-all"
+                                    >
+                                        BACK HOME
                                     </a>
                                 </div>
                             </div>

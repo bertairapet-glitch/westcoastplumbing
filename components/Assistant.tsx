@@ -1,6 +1,5 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { geminiService } from '../services/geminiService';
+import OpenAI from 'openai';
 import { ChatMessage } from '../types';
 import { ICON_MAP } from '../constants';
 
@@ -28,9 +27,50 @@ export const Assistant: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    const diagnosis = await geminiService.diagnoseProblem(newMessages);
-    setMessages([...newMessages, { role: 'assistant', content: diagnosis }]);
-    setIsLoading(false);
+    try {
+      const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+      console.log('API Key present:', !!apiKey, apiKey ? apiKey.substring(0, 10) + '...' : 'none');
+      if (!apiKey) {
+        throw new Error('API key not found');
+      }
+
+      const openai = new OpenAI({
+        apiKey: apiKey,
+        dangerouslyAllowBrowser: true
+      });
+
+      // Format messages for OpenAI
+      const formattedMessages: OpenAI.Chat.Completions.ChatCompletionMessageParam[] = [
+        {
+          role: 'system',
+          content: `You are a professional, super-intelligent plumbing assistant for "West Coast Plumbing" in Burbank, CA.
+          - Help customers identify plumbing issues clearly.
+          - Ask follow-up questions to understand the problem fully.
+          - If it sounds dangerous (gas leak, flooding), tell them to call (714) 267-9974 immediately.
+          - Avoid DIY instructions that could cause damage; focus on diagnosis and recommendations.
+          - Be friendly, professional, and highly informative.`
+        },
+        ...newMessages.map(msg => ({
+          role: msg.role === 'user' ? 'user' as const : 'assistant' as const,
+          content: msg.content
+        }))
+      ];
+
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: formattedMessages,
+        max_tokens: 500,
+        temperature: 0.7,
+      });
+
+      const response = completion.choices[0]?.message?.content || 'Sorry, I couldn\'t generate a response.';
+      setMessages([...newMessages, { role: 'assistant', content: response }]);
+    } catch (error) {
+      console.error('Error calling OpenAI API:', error);
+      setMessages([...newMessages, { role: 'assistant', content: 'Sorry, I encountered an error. Please try again.' }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
