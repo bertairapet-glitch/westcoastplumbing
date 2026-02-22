@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ShieldCheck, Clock, Star, Phone, ArrowRight, Calendar } from 'lucide-react';
 
 export const Hero: React.FC = () => {
-  const [scrollY, setScrollY] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const [imageSrc, setImageSrc] = useState('/hero-action.png');
 
@@ -15,34 +14,17 @@ export const Hero: React.FC = () => {
       }
     };
 
-    const handleScroll = () => {
-      if (window.innerWidth < 1024 && containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-
-        if (rect.top < viewportHeight && rect.bottom > 0) {
-          const distance = viewportHeight - rect.top;
-          setScrollY(distance);
-        }
-      }
-    };
-
     window.addEventListener('resize', handleResize);
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
-    // Initial calls
     handleResize();
-    handleScroll();
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-40 bg-[#020617] overflow-hidden border-b-2 border-slate-800/50">
-      {/* Dynamic Background Accents - Matching the "slightly more blue" request */}
+    <section className="relative pt-32 pb-0 lg:pt-48 lg:pb-40 bg-[#020617] overflow-hidden border-b-2 border-slate-800/50">
+      {/* Dynamic Background Accents */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-48 -left-48 w-[600px] h-[600px] bg-blue-600/20 rounded-full blur-[160px]"></div>
         <div className="absolute top-1/2 -right-48 w-[500px] h-[500px] bg-indigo-500/15 rounded-full blur-[140px]"></div>
@@ -109,14 +91,9 @@ export const Hero: React.FC = () => {
           </div>
 
           {/* Visual Right */}
-          <div ref={containerRef} className="lg:w-[55%] mt-24 lg:mt-0 relative flex justify-end -mx-4 lg:mx-0 -mb-[20px] lg:mb-0">
+          <div ref={containerRef} className="lg:w-[55%] mt-24 lg:mt-0 relative flex justify-end -mx-4 lg:mx-0 lg:mb-0">
             <div
-              className="relative transform lg:rotate-3 scale-110 xl:scale-135 2xl:scale-150 origin-center transition-transform duration-75 ease-out"
-              style={{
-                transform: typeof window !== 'undefined' && window.innerWidth < 1024
-                  ? `translateY(${scrollY * 0.2}px)`
-                  : undefined
-              }}
+              className="relative scale-110 lg:transform lg:rotate-3 lg:scale-110 xl:scale-135 2xl:scale-150 origin-center lg:transition-transform lg:duration-75 lg:ease-out"
             >
               <div className="absolute -inset-4 bg-blue-500/10 rounded-[2.5rem] blur-2xl opacity-60 hidden lg:block"></div>
 
@@ -126,18 +103,18 @@ export const Hero: React.FC = () => {
                 className="relative rounded-none lg:rounded-[2rem] shadow-none lg:shadow-2xl w-full h-auto object-cover border-0 lg:border border-white/10"
               />
 
-              {/* Verified Review Card - Even Smaller as requested */}
-              <div className="absolute -bottom-8 -left-8 bg-white shadow-lg p-3 rounded-2xl max-w-[160px] border border-slate-100 hidden xl:block transform -rotate-6 transition-transform hover:rotate-0 duration-500">
-                <div className="inline-flex items-center gap-1.5 px-1.5 py-0.5 mb-1.5 text-[8px] font-black bg-emerald-50 text-emerald-600 rounded-lg uppercase tracking-widest border border-emerald-100">
-                  <span className="w-1 h-1 rounded-full bg-emerald-500"></span>
+              {/* Verified Review Card - Middle Ground Size */}
+              <div className="absolute -bottom-10 -left-10 bg-white shadow-lg p-3.5 rounded-2xl max-w-[180px] border border-slate-100 hidden xl:block transform -rotate-6 transition-transform hover:rotate-0 duration-500">
+                <div className="inline-flex items-center gap-1.5 px-2 py-0.5 mb-2 text-[8.5px] font-black bg-emerald-50 text-emerald-600 rounded-lg uppercase tracking-widest border border-emerald-100">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                   Verified Review
                 </div>
-                <p className="text-[10px] text-slate-600 italic leading-snug font-semibold mb-3">
+                <p className="text-[10.5px] text-slate-600 italic leading-snug font-semibold mb-3">
                   "Fast response when my water heater failed. They were here within hours and had it running again."
                 </p>
                 <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-[8px]">MR</div>
-                  <div className="text-[9px] font-bold text-slate-900">— Mike R., Burbank</div>
+                  <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-[9px]">MR</div>
+                  <div className="text-[10.5px] font-bold text-slate-900">— Mike R., Burbank</div>
                 </div>
               </div>
             </div>
