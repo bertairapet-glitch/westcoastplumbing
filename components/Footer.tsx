@@ -5,9 +5,9 @@ import { ICON_MAP } from '../constants';
 export const Footer: React.FC = () => {
   return (
     <footer className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-400 py-16 relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tl from-indigo-500/10 to-blue-500/10 rounded-full blur-3xl"></div>
-      <div className="max-w-full px-4 sm:px-10 lg:px-20">
+      <div className="absolute top-0 left-1/4 w-64 h-64 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-tl from-indigo-500/10 to-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div className="max-w-full px-4 sm:px-10 lg:px-20 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-x-12 gap-y-6 md:gap-12">
           <div className="col-span-1 md:col-span-2 flex flex-col items-center">
             <img
